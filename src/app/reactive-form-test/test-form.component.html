@@ -1,0 +1,42 @@
+<form [formGroup]="registrationForm" (submit)="save()">
+  <div class="group-gap" formGroupName="e">
+    <div class="d-block my-3">
+      <div class="mb-3">
+        <select class="custom-select" [formControlName]="1">
+          <option value="">Choose your city</option>
+          <option *ngFor="let city of City" [ngValue]="city">
+            {{ city }}
+          </option>
+        </select>
+
+        <!-- error block -->
+        <div class="invalid-feedback"
+          *ngIf="registrationForm.get('e.1').dirty && registrationForm.get('e.1').errors?.required">
+          <sup>*</sup>Please enter your city name
+        </div>
+      </div>
+
+      <div class="group-gap">
+        <h5 class="mb-3">Gender</h5>
+        <div class="d-block my-3">
+          <div class="custom-control custom-radio">
+            <input id="male" type="radio" class="custom-control-input" [value]="'male'" [formControlName]="2"/>
+            <label class="custom-control-label" for="male">Male</label>
+          </div>
+
+          <div class="custom-control custom-radio">
+            <input id="female" type="radio" class="custom-control-input" [value]="'female'" [formControlName]="2"/>
+            <label class="custom-control-label" for="female">Female</label>
+          </div>
+
+          <div class="invalid-feedback" *ngIf="registrationForm.get('e.2').dirty && registrationForm.get('e.2').errors?.required">
+            <p>Please select either value</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{registrationForm.value | json}}
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-danger btn-lg btn-block"> Submit </button>
+</form>
