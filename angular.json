@@ -31,7 +31,20 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "angular-sanitize",
+              "angular-animate",
+              "angular-ui-bootstrap",
+              "angular-messages",
+              "angular-filter",
+              "angular-cookies",
+              "angular-aria",
+              "angular-slick",
+              "angular-scroll",
+              "angular-touch",
+              "angular"
+            ]
           },
           "configurations": {
             "production": {

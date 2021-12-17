@@ -1,6 +1,5 @@
+// import 'angular-route';
 import * as angular from 'angular';
-import './landing/landing.module';
-import 'angular-route';
 import 'angular-sanitize';
 import 'angular-animate';
 import 'angular-ui-bootstrap';
@@ -11,14 +10,27 @@ import 'angular-aria';
 import 'angular-slick';
 import 'angular-scroll';
 import 'angular-touch';
-import 'angular-shims-placeholder';
+
+import uiRouter from "@uirouter/angularjs";
+import { upgradeModule } from "@uirouter/angular-hybrid";
+import { UrlService } from '@uirouter/core';
+import { StateProvider } from '@uirouter/angularjs';
+
+import { landingModule } from './landing/landing.module';
+import { otherModule } from './other-page/other.module';
+import { pageNotFoundModule } from './page-not-found/page-not-found.module';
 
 import { ng1AppComponent } from './ng1App.component';
-import 'ng1App/landing/landing.module';
-import 'ng1App/other-page/other.module';
+function defaultState($stateProvider: StateProvider, $urlServiceProvider: UrlService, $locationProvider: angular.ILocationProvider) {
+  $stateProvider.state({ name: 'app', redirectTo: 'landing', url: '' });
+  $urlServiceProvider.deferIntercept();
+  $urlServiceProvider.rules.otherwise('/pageNotFound');
+  $locationProvider.hashPrefix('');
+}
+defaultState.$inject = ['$stateProvider', '$urlServiceProvider', '$locationProvider'];
+
 
 angular.module('ngAppModule', [
-  'ngRoute',
   'ngSanitize',
   'ngAnimate',
   'ui.bootstrap',
@@ -29,11 +41,12 @@ angular.module('ngAppModule', [
   'ngAria',
   'slick',
   'duScroll',
-  'LandingModule',
-  'OtherModule'
+  uiRouter,
+  upgradeModule.name,
+  landingModule.name,
+  otherModule.name,
+  pageNotFoundModule.name
 ])
   .component('ngApp', ng1AppComponent)
-  .config(['$locationProvider', function($locationProvider: angular.ILocationProvider){
-    $locationProvider.hashPrefix('');
-  }])
+  .config(defaultState);
 

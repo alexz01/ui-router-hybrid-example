@@ -1,19 +1,19 @@
+import uiRouter, { StateProvider } from "@uirouter/angularjs";
 import * as angular from 'angular';
 
 import { landingComponent } from './landing.component';
 
-function landingRoutes($routeProvider: angular.route.IRouteProvider) {
-  console.log('configured other route');
-  $routeProvider .when('/', {
-      template: '<landing></landing>',
-      resolve: {
-        log: function(){ console.log('resolving /')}
-      },
-    })
-    .otherwise({ redirectTo: '/' , });
+function landingStates($stateProvider: StateProvider) {
+  $stateProvider.state({
+    url: '/',
+    name: 'landing',
+    component: 'landing'
+  });
 }
-landingRoutes.$inject = ['$routeProvider'];
+landingStates.$inject = ['$stateProvider'];
 
-export const landingModule = angular.module('LandingModule', ['ngRoute'])
+export const landingModule = angular.module('LandingModule', [uiRouter])
   .component('landing', landingComponent)
-  .config(landingRoutes);
+  // .config(landingRoutes)
+  .config(landingStates)
+  ;

@@ -5,6 +5,7 @@ import { Ng1AppComponent } from './ng1App.component';
 import { LandingComponent } from './landing/landing.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NgHybridStateDeclaration, UIRouterUpgradeModule } from '@uirouter/angular-hybrid';
 
 const routes: Routes = [
   { path: '', component: Ng1AppComponent },
@@ -13,9 +14,15 @@ const routes: Routes = [
   { path: '**', redirectTo: '/' },
 ];
 
+const states: Array<NgHybridStateDeclaration> = [
+  { url: '/landing', name:"ng2Landing", component: LandingComponent },
+  { url: '/form', name:'ng2test', component: TestForm },
+  // {url: '', redirectTo: 'landing', name:'app'}
+];
+
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    UIRouterUpgradeModule.forRoot({ states }),
     FormsModule,
     ReactiveFormsModule,
     CommonModule,

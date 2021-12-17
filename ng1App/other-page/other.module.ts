@@ -1,17 +1,17 @@
+import { StateProvider, StateRegistry } from '@uirouter/angularjs';
+import uiRouter from "@uirouter/angularjs";
 import * as angular from 'angular';
 import { otherComponent } from './other.component';
-
-function otherRoutes($routeProvider: angular.route.IRouteProvider) {
-  console.log('configured other route');
-  $routeProvider.when('/other', {
-    template: '<other></other>',
-    resolve: {
-      log: function(){ console.log('resolving /other')}
-    }
+function otherStates($stateProvider: StateProvider){
+  $stateProvider.state({
+    url: '/other',
+    name: 'other',
+    component: 'other'
   });
-}
-otherRoutes.$inject = ['$routeProvider'];
 
-export const otherModule = angular.module('OtherModule', ['ngRoute'])
+}
+otherStates.$inject =['$stateProvider'];
+
+export const otherModule = angular.module('OtherModule', [uiRouter])
   .component('other', otherComponent)
-  .config(otherRoutes);
+  .config(otherStates);
